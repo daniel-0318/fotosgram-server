@@ -1,0 +1,2 @@
+tsc -w		---> para que quede escuchando y vaya compilando los archivos JS
+nodemon dist	---> monitoreará cualquier cambio en su fuente y reiniciará automáticamente su servidor
