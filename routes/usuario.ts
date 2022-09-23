@@ -2,7 +2,7 @@ import { Request, Response, Router } from "express";
 import { Usuario } from "../models/usuario.model";
 import bcrypt from "bcrypt";
 import Token from '../classes/token';
-import { verificaToken } from '../moddlewares/autenticacion';
+import { verificaToken } from '../middlewares/autenticacion';
 
 
 const userRoutes = Router();
