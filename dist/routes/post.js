@@ -39,6 +39,11 @@ postRoutes.get('/', (req, res) => __awaiter(void 0, void 0, void 0, function* ()
 postRoutes.post('/', [autenticacion_1.verificaToken], (req, res) => {
     const body = req.body;
     body.usuario = req.usuario._id;
+    const imagenes = fileSystem.imagenesDeTempHaciaPost(req.usuario._id);
+    console.log("-------- Aqui ------------");
+    console.log(imagenes);
+    console.log("/////////////////////");
+    body.imgs = imagenes;
     post_model_1.Post.create(body).then((postDB) => __awaiter(void 0, void 0, void 0, function* () {
         yield postDB.populate('usuario', '-password');
         res.json({
@@ -50,7 +55,7 @@ postRoutes.post('/', [autenticacion_1.verificaToken], (req, res) => {
     });
 });
 // Servicio para subir archivos
-postRoutes.post('/upload', [autenticacion_1.verificaToken], (req, res) => {
+postRoutes.post('/upload', [autenticacion_1.verificaToken], (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     if (!req.files) {
         return res.status(400).json({
             ok: false,
@@ -70,10 +75,10 @@ postRoutes.post('/upload', [autenticacion_1.verificaToken], (req, res) => {
             mensaje: 'Lo que subió no es una imagen'
         });
     }
-    fileSystem.guardarImagenTemporal(file, req.usuario._id);
+    yield fileSystem.guardarImagenTemporal(file, req.usuario._id);
     res.json({
         ok: true,
         file
     });
-});
+}));
 exports.default = postRoutes;

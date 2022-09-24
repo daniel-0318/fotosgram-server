@@ -35,8 +35,15 @@ postRoutes.get('/', async (req: any, res: Response)=>{
 postRoutes.post('/', [verificaToken], (req: any, res: Response)=>{
 
     const body = req.body;
-
     body.usuario = req.usuario._id;
+
+    const imagenes = fileSystem.imagenesDeTempHaciaPost( req.usuario._id );
+    console.log("-------- Aqui ------------");
+    console.log(imagenes);
+    console.log("/////////////////////");
+    
+    body.imgs = imagenes;
+
 
     Post.create( body ).then(async postDB =>{
 
@@ -55,7 +62,7 @@ postRoutes.post('/', [verificaToken], (req: any, res: Response)=>{
 
 
 // Servicio para subir archivos
-postRoutes.post('/upload', [ verificaToken ], (req: any, res: Response) => {
+postRoutes.post('/upload', [ verificaToken ], async (req: any, res: Response) => {
 
     if( !req.files ){
         return res.status(400).json({
@@ -80,7 +87,7 @@ postRoutes.post('/upload', [ verificaToken ], (req: any, res: Response) => {
         });
     }
 
-    fileSystem.guardarImagenTemporal(file, req.usuario._id);
+    await fileSystem.guardarImagenTemporal(file, req.usuario._id);
 
     res.json({
         ok: true,
