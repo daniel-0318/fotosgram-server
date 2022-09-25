@@ -101,4 +101,21 @@ export default class FileSystem {
 
     }
 
+
+    getFotoUrl(userId: string, img: string){
+        
+        //Path Post
+        const pathFoto = path.resolve(__dirname, '../uploads', userId, 'posts', img );
+
+        //Si la imagen existe
+        const existe = fs.existsSync( pathFoto );
+
+        if( !existe ){
+            return path.resolve(__dirname, '../assets/400x250.jpg');
+        }
+
+        return pathFoto;
+
+    }
+
 }
