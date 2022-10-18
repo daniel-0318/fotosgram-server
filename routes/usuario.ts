@@ -93,7 +93,7 @@ userRoutes.post('/update', (req: any, res: Response) =>{
         avatar: req.body.avatar || req.usuario.avatar
     }
 
-    Usuario.findByIdAndUpdate(req.usuario._id, user, { new: true }, (err, userDB)=>{
+    Usuario.findByIdAndUpdate(req.body._id, user, { new: true }, (err, userDB)=>{
         
         if(err) throw err;
         
